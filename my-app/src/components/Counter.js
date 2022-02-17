@@ -1,14 +1,32 @@
-import React ,{useState} from 'react';
+
 import "../App.css";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment, resetValue } from './Redux/count/countSlice';
 
 export default function Counter() {
-    const [count,updateCount] = useState(100)
+  //count values from reducer 
+  const count = useSelector((state) => state.count.value)
+  const dispatch = useDispatch();
+  const increaseCount = ()=>{
+    dispatch(increment())
+  }
+  const decreaseCount = ()=>{
+    dispatch(decrement())
+  }
+  const reset = ()=>{
+    dispatch(resetValue())
+
+  }
+  console.log("Reducer",increment)
   return (
     <div className="counter">
         <h2>Counter</h2>
         <p>The Count is {count}</p>
-        <button onClick={()=>{updateCount(count + 1)}}>+</button>
-        <button onClick={()=>{updateCount(count - 1)}}>-</button>
+        {/*Emiting actions on Click*/}
+        <button onClick={increaseCount}>+</button>
+        <button onClick={reset}>RESET</button>
+        <button onClick={decreaseCount}>-</button>
         </div>
   )
 }
